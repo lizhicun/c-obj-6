@@ -108,7 +108,13 @@ class Point3d : public Point {
   // ...
 }
 ```
-如果我们这样配置
+如果我们这样配置 (!!!!!!!!!!!!!!!!!!!!! 测试)
 ```
 Point *ptr = new Point3d[10];
 ```
+我们预期 : Point 和 Point3d 的constructor 会各被调用 10 次。当我们 delete 这个 ptr 所指向的 10 个 Point3d 元素时，很显然需要虚拟机制的帮助，以获得 Point 和 Point3d 的 destructor 的各 10 次调用。  
+
+施行于数组上的 destructor 是根据 vec_delete() 函数之”被删除的指针类型的 destructor“——本例中为 Point destructor。所以这个程序就会出错。不仅仅是因为执行了错误的 destructor，而且从第一个元素开始往后，destructor 会被施行于不正确的内存区块中（因为元素大小不对）。  
+
+所以，我们应该避免以一个 base class 指针指向一个 derived class object class 所组成的数组。
+
