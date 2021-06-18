@@ -108,7 +108,7 @@ class Point3d : public Point {
   // ...
 }
 ```
-如果我们这样配置 (!!!!!!!!!!!!!!!!!!!!! 测试)
+如果我们这样配置
 ```
 Point *ptr = new Point3d[10];
 ```
